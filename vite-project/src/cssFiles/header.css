@@ -1,0 +1,43 @@
+
+
+header{
+    width:100vw;
+    height:100vh;
+    background-image: url(../images/AAPSBack.jpg);
+    background-position: center;
+    background-size: cover;
+    display:flex;
+    justify-content:center;
+    align-items: flex-end;
+}
+
+a{
+    text-decoration: none;
+}
+
+.header-content{
+    margin-bottom: 150px;
+    color:whitesmoke;
+    text-align: center;
+}
+.header-content h2{
+    font-size: 4vmin;
+}
+.header-content h1{
+    font-size: 7vmin;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+.line{
+    width:150px;
+    height:4px;
+    background: crimson;
+    margin:10px auto;
+    border-radius: 5px;
+}
+.ctn{
+    padding:8px 15px;
+    background: crimson;
+    border-radius: 30px;
+    color:whitesmoke;
+}
