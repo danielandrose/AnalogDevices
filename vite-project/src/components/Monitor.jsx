@@ -6,7 +6,9 @@ function Monitor() {
         <div className='main-monitor'>
             <div className="driver-awake">
                 <h1>Is Driver is awake</h1>
-                <h2>Yes</h2>
+                <h2>
+                    
+                Yes</h2>
             </div>
             <div className="sub-monitor">
                 <div>
@@ -15,7 +17,7 @@ function Monitor() {
                 </div>
                 <div>
                     <h1>Air Pressure</h1>
-                    <h3>87%    <span>Safe</span></h3>
+                    <h3>87% <span>Safe</span></h3>
                 </div>
             </div>
         </div>
