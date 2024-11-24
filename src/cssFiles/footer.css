@@ -1,0 +1,26 @@
+footer{
+    font-size: 13px;
+}
+.footer{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height :120px;
+    background-color: aquamarine;
+}
+.footer-details{
+    margin:0px;
+    padding:0px;
+    margin-top: 10px;
+}
+.footer-icons{
+    display:flex;
+    flex-direction: row;
+    padding:10px;
+}
+.footer-icon{
+    height:40px;
+    width:40px;
+    padding:0px 10px 0px 10px;
+}
