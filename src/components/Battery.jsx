@@ -10,11 +10,19 @@ function Battery(){
     const [percentages,setPercentages]=useState([])
     const [percent,setPercent]=useState(0)
     const callGetApi=async()=>{
-        const data=await axios.get(API_URL+"batteryPercentage")
-        setPercentages(data.data)
-        if (data.length > 0) {
-            setPercent(data[data.length - 1].value);
-        }
+        try {
+            const response = await axios.get(`${API_URL}batteryPercentage`);
+            const data = response.data;
+      
+            if (Array.isArray(data) && data.length > 0) {
+              setPercentages(data);
+              setPercent(data[data.length - 1].value);
+            } else {
+              console.error("Unexpected data format: ", data);
+            }
+          } catch (error) {
+            console.error("Error fetching data: ", error);
+          }
     }
     useEffect(()=>{
         callGetApi()
