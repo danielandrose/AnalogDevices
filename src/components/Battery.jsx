@@ -26,7 +26,7 @@ function Battery(){
     }
     useEffect(()=>{
         callGetApi()
-    },[])
+    })
     return (
         <div className="battery">
             <h3>Battery Percentage</h3>
