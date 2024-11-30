@@ -3,12 +3,16 @@ import { API_URL } from '../constants/URL'
 import axios from 'axios'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useNavigate } from 'react-router-dom';
 
 
 function Battery(){
-    
+    const navigate=useNavigate()
     const [percentages,setPercentages]=useState([])
     const [percent,setPercent]=useState(0)
+    function BatteryDetails(){
+      navigate("battery-details")
+    }
     const callGetApi=async()=>{
         try {
             const response = await axios.get(`${API_URL}batteryPercentage`);
@@ -31,7 +35,10 @@ function Battery(){
         <div className="battery">
             <h3>Battery Percentage</h3>
             <CircularProgressbar className="progress-bar" value={percent} text={`${percent}%`} />
-            <button className="detailsButton">View Details</button>
+            <button 
+              className="detailsButton"
+              onClick={BatteryDetails}
+            >View Details</button>
         </div>
     )
 }

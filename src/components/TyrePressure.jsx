@@ -3,11 +3,17 @@ import { API_URL } from '../constants/URL'
 import axios from 'axios'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useNavigate } from 'react-router-dom';
 
 
 function TyrePressure(){
+  const navigate=useNavigate()
     const [percentages,setPercentages]=useState([])
     const [percent,setPercent]=useState(0)
+    function TyrePressureDetails(){
+      navigate("tyre-pressure-details")
+    }
+
     const callGetApi=async()=>{
         try {
             const response = await axios.get(`${API_URL}tyre-pressure`);
@@ -30,7 +36,7 @@ function TyrePressure(){
         <div className="battery">
             <h3>Tyre Pressure Percentage</h3>
             <CircularProgressbar className="progress-bar" value={percent} text={`${percent}%`} />
-            <button className="detailsButton">View Details</button>
+            <button className="detailsButton" onClick={()=>TyrePressureDetails()}>View Details</button>
         </div>
     )
 }
