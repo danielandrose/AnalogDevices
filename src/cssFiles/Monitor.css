@@ -67,3 +67,24 @@ span{
         margin-bottom: 50px;
     }
 }
+
+.box{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height:100vh;
+}
+
+.box h2{
+    margin: 0;
+    padding: 0;
+    padding:20px;
+    text-align: center;
+}
+
+.box .slider{
+    width:90%;
+    display: flex;
+    justify-content: center;
+    margin:auto;
+}

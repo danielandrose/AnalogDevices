@@ -1,4 +1,3 @@
-import '../cssFiles/responsive.css'
 import '../cssFiles/header.css'
 function Header(){
     return (

@@ -37,7 +37,9 @@ function Battery(){
             <CircularProgressbar className="progress-bar" value={percent} text={`${percent}%`} />
             <button 
               className="detailsButton"
-              onClick={BatteryDetails}
+              onClick={()=>{
+                BatteryDetails();
+              }}
             >View Details</button>
         </div>
     )
