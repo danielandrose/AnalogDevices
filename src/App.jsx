@@ -4,11 +4,16 @@ import NavBar from "./components/NavBar"
 import Monitor from "./components/Monitor"
 import { Footer } from './components/Footer'
 import TyrePressureDetails from './components/TyrePressureDetails'
-import BatteryDetails from './components/TyrePressureDetails'
+import BatteryDetails from './components/BatteryDetails'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import {store} from './store'
+
+
 function App() {
 
   return (
+    <Provider store={store}>
     <div>
       <BrowserRouter>
         <Routes className='app'>
@@ -25,6 +30,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
+    </Provider>
   )
 }
 

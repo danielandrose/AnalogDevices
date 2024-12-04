@@ -1,48 +1,57 @@
 import * as React from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Slider from '@mui/material/Slider';
+import { BarChart } from '@mui/x-charts/BarChart';
+import { Footer } from "./Footer";
+import { useSelector } from 'react-redux';
 
-export default function BatteryDetails() {const [seriesNb, setSeriesNb] = React.useState(1);
-    const [itemNb, setItemNb] = React.useState(5);
+export default function BatteryDetails() {
+  const batteryData = useSelector((state) => state.BatteryPercentages || []);
   
-    const handleItemNbChange = (event, newValue) => {
-      if (typeof newValue !== 'number') {
-        return;
-      }
+  const formattedData = batteryData.map((item) => ({
+    value: item.value,  // battery percentage
+  }));
+
+  console.log('Formatted Battery Data:', formattedData); // Log the formatted data
+
+  const [itemNb, setItemNb] = React.useState(Math.min(7, formattedData.length)); // Ensure it doesn’t exceed available data
+
+  console.log('Items to display:', itemNb); // Log how many items will be displayed
+
+  const handleItemNbChange = (event, newValue) => {
+    if (typeof newValue === 'number') {
       setItemNb(newValue);
-    };
-  
-    return (
+    }
+  };
+
+  return (
+    <div className="box">
+      <h2>Battery Percentage Analysis</h2>
       <Box sx={{ width: '100%' }}>
         <BarChart
-          height={300}
-          series={series
-            .slice(0, seriesNb)
-            .map((s) => ({ ...s, data: s.data.slice(0, itemNb) }))}
+          height={350}
+          series={[
+            {
+              label: 'Battery Percentage History',
+              data: formattedData.slice(0, itemNb).map((item) => item.value), // Only battery percentage values for y-axis
+            },
+          ]}
         />
-        <Typography id="input-item-number" gutterBottom>
+        <Typography id="input-item-number" gutterBottom className="slider">
           Number of items
         </Typography>
         <Slider
+          className="slider"
           value={itemNb}
           onChange={handleItemNbChange}
           valueLabelDisplay="auto"
           min={1}
-          max={20}
+          max={Math.min(20, formattedData.length)}
           aria-labelledby="input-item-number"
         />
       </Box>
-    );
-  }
-  
-  const highlightScope = {
-    highlight: 'Battery Percentge History',
-    fade: 'global',
-  };
-  
-  const series = [
-    {
-      label: 'Battery Percentge History',
-      data: [
-        56,89,45,91,45,89,96,
-      ],
-    }
-  ].map((s) => ({ ...s, highlightScope }));
+      <Footer />
+    </div>
+  );
+}

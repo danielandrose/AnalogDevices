@@ -4,10 +4,12 @@ import axios from 'axios'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate } from 'react-router-dom';
-
+import { addBatteryPercentage } from '../slices/batterySlice';
+import { useDispatch } from 'react-redux';
 
 function Battery(){
     const navigate=useNavigate()
+    const dispatch=useDispatch()
     const [percentages,setPercentages]=useState([])
     const [percent,setPercent]=useState(0)
     function BatteryDetails(){
@@ -20,6 +22,7 @@ function Battery(){
       
             if (Array.isArray(data) && data.length > 0) {
               setPercentages(data);
+              dispatch(addBatteryPercentage(percentages))
               setPercent(data[data.length - 1].value);
             } else {
               console.error("Unexpected data format: ", data);
@@ -38,7 +41,7 @@ function Battery(){
             <button 
               className="detailsButton"
               onClick={()=>{
-                BatteryDetails();
+                BatteryDetails()
               }}
             >View Details</button>
         </div>
