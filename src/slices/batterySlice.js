@@ -7,6 +7,7 @@ const batterySlice=createSlice({
     initialState:initialState,
     reducers:{
         addBatteryPercentage(state,action){
+            console.log("Data added to the store:", action.payload);
             state.push(action.payload)
         }
     }
