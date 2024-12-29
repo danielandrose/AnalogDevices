@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
@@ -7,6 +8,12 @@ import { Footer } from './Footer';
 import { useSelector } from 'react-redux';
 
 export default function BatteryDetails() {
+  const [toggle,setToggle]=useState(0);
+
+  const toggleButtonStyle={
+    backgroundColor:"gray"
+  }
+
   const batteryData = useSelector((state) => state.BatteryPercentages || []);
   
   const flattenedData = batteryData.flat();
@@ -18,39 +25,36 @@ export default function BatteryDetails() {
     value: item.value,
   }));
 
-  // Function to group data by day, month, or hour and calculate averages
   const groupDataByPeriod = (period) => {
     let groupedData = {};
-
-    // Group data based on the selected period and calculate average
+  
     formattedData.forEach((item) => {
       let groupKey;
-
+  
       if (period === 'day') {
-        groupKey = item.date.getDate(); // Use day of month as the group key
+        groupKey = item.date.toDateString();
       } else if (period === 'month') {
-        groupKey = item.date.getMonth() + 1; // Use month (1-12) as the group key
+        groupKey = item.date.getMonth() + 1;
       } else if (period === 'hour') {
-        groupKey = item.date.getHours(); // Use hour (0-23) as the group key
+        // Include date and hour for unique grouping
+        groupKey = `${item.date.toDateString()} ${item.date.getHours()}:00`;
       }
-
-      // Calculate the sum of values for the group and count occurrences
+  
       if (!groupedData[groupKey]) {
         groupedData[groupKey] = { sum: 0, count: 0 };
       }
       groupedData[groupKey].sum += item.value;
       groupedData[groupKey].count += 1;
     });
-
-    // Calculate averages for each group
+  
     const averagedData = Object.keys(groupedData).map((key) => ({
-      label: parseInt(key, 10), // Convert key back to integer
-      value: groupedData[key].sum / groupedData[key].count, // Average value
+      label: key, // Use the full group key as the label
+      value: groupedData[key].sum / groupedData[key].count,
     }));
-
-    // Reverse the order of data (most recent first)
-    return averagedData.reverse(); // Reversing to show the most recent data first
+  
+    return averagedData;
   };
+  
 
   // States to control data for each period
   const [selectedPeriod, setSelectedPeriod] = React.useState('day'); // Default to 'day'
@@ -58,6 +62,15 @@ export default function BatteryDetails() {
 
   // Handle the period change (day, month, hour)
   const handlePeriodChange = (newPeriod) => {
+    if(newPeriod==='day'){
+      setToggle(0)
+    }
+    else if(newPeriod==='month'){
+      setToggle(1)
+    }
+    else if(newPeriod==='hour'){
+      setToggle(2)
+    }
     setSelectedPeriod(newPeriod);
     setItemNb(7); // Reset item count when period changes
   };
@@ -75,11 +88,22 @@ export default function BatteryDetails() {
   return (
     <div className="box">
       <h2>Battery Percentage Analysis</h2>
-      {/* Buttons to toggle between day, month, and hour */}
-      <div>
-        <button onClick={() => handlePeriodChange('day')}>Day</button>
-        <button onClick={() => handlePeriodChange('month')}>Month</button>
-        <button onClick={() => handlePeriodChange('hour')}>Hour</button>
+      <div className='toggle'>
+        <button 
+          style={toggle==0?toggleButtonStyle:null} 
+          onClick={() => handlePeriodChange('day')}>
+            Day
+        </button>
+        <button 
+          style={toggle==1?toggleButtonStyle:null} 
+          onClick={() => handlePeriodChange('month')}>
+            Month
+        </button>
+        <button 
+          style={toggle==2?toggleButtonStyle:null} 
+          onClick={() => handlePeriodChange('hour')}>
+            Hour
+        </button>
       </div>
 
       <Box sx={{ width: "100%" }}>
@@ -94,10 +118,8 @@ export default function BatteryDetails() {
           xAxis={[
             {
               scaleType: 'band',
-              data: groupedData.slice(0, itemNb).map((item) => {
-                return item.label; // For months, this will be numbers 1-12
-              }),
-              label: selectedPeriod.charAt(0).toUpperCase() + selectedPeriod.slice(1), // X-axis label for period (Day, Month, Hour)
+              data: groupedData.slice(0, itemNb).map((item) => item.label), // Include full date and hour
+              label: "Date & Hour",
             },
           ]}
         />

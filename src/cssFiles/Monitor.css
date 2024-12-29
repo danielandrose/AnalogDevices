@@ -88,3 +88,20 @@ span{
     justify-content: center;
     margin:auto;
 }
+
+.toggle{
+    margin:0;
+    padding:0;
+    display:flex;
+    justify-content: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.toggle>button{
+    min-width:100px;
+    border: none;
+    background-color: #ffffff;
+    padding:5px;
+    border:2px solid gray
+}

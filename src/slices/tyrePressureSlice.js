@@ -7,6 +7,7 @@ const tyrePressureSlice=createSlice({
     initialState:initialState,
     reducers:{
         addTyrePressure(state,action){
+            console.log("Data added to the store:", action.payload);
             state.push(action.payload)
         }
     }
